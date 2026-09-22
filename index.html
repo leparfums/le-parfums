@@ -1,8 +1,368 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>L&E Parfums</title><link rel="stylesheet" href="style.css"></head><body>
-<header><a class="logo" href="#">L&E <small>PARFUMS</small></a><nav><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#decants">Decants</a><a href="#contacto">Contacto</a></nav><button id="menu">☰</button></header>
-<section id="inicio" class="hero"><div><p class="gold">L&E PARFUMS</p><h1>Tu próxima<br><i>fragancia favorita.</i></h1><p>Perfumes árabes y decants seleccionados para vos.</p><a class="btn" href="#catalogo">VER CATÁLOGO</a></div><div class="bottle">L&E</div></section>
-<section class="benefits"><span>✓ Atención personalizada</span><span>✓ Decants 5 ml y 10 ml</span><span>✓ Compra por WhatsApp</span></section>
-<section id="catalogo"><p class="gold">COLECCIÓN</p><h2>Perfumes destacados</h2><div class="filters"><button data-f="todos" class="active">Todos</button><button data-f="femenino">Femeninos</button><button data-f="masculino">Masculinos</button><button data-f="unisex">Unisex</button></div><div id="products"></div></section>
-<section id="decants" class="decants"><div><p class="gold">PROBÁ ANTES DE COMPRAR</p><h2>Decants</h2><p>Llevá tus fragancias favoritas en formato pequeño.</p></div><div class="prices"><b>5 ML<br><strong>$350</strong></b><b>10 ML<br><strong>$550</strong></b></div></section>
-<section id="contacto" class="contact"><p class="gold">CONTACTO</p><h2>¿Cuál será tu próximo perfume?</h2><a class="btn" id="wa" target="_blank">WHATSAPP</a> <a class="btn outline" id="ig" target="_blank">INSTAGRAM</a></section>
-<footer>L&E PARFUMS · Perfumes árabes & decants · © <span id="year"></span></footer><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>L&E PARFUMS | Fragancias Árabes & Decants</title>
+ <!-- Fuente elegante de Google Fonts -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+ 
+ <style>
+ /* --- ESTILOS GENERALES Y TEMÁTICA ELEGANTE --- */
+ :root {
+ --bg-color: #0f0f11;
+ --card-bg: #18181c;
+ --accent-gold: #d4af37;
+ --accent-gold-hover: #f3e5ab;
+ --text-light: #f5f5f7;
+ --text-muted: #a1a1a6;
+ --border-color: #2a2a30;
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: 'Montserrat', sans-serif;
+ background-color: var(--bg-color);
+ color: var(--text-light);
+ line-height: 1.6;
+ }
+
+ h1, h2, h3, .logo {
+ font-family: 'Cinzel', serif;
+ letter-spacing: 1px;
+ }
+
+ a {
+ text-decoration: none;
+ color: inherit;
+ transition: all 0.3s ease;
+ }
+
+ /* --- ENCABEZADO Y NAVEGACIÓN --- */
+ header {
+ background-color: rgba(15, 15, 17, 0.95);
+ border-bottom: 1px solid var(--border-color);
+ position: sticky;
+ top: 0;
+ z-index: 1000;
+ backdrop-filter: blur(10px);
+ }
+
+ .header-container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 1rem 2rem;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ .logo {
+ font-size: 1.5rem;
+ font-weight: 700;
+ color: var(--accent-gold);
+ }
+
+ .logo span {
+ font-size: 0.8rem;
+ display: block;
+ color: var(--text-muted);
+ letter-spacing: 3px;
+ }
+
+ nav ul {
+ display: flex;
+ list-style: none;
+ gap: 2rem;
+ }
+
+ nav a {
+ font-size: 0.9rem;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ color: var(--text-muted);
+ }
+
+ nav a:hover {
+ color: var(--accent-gold);
+ }
+
+ /* --- SECCIÓN HERO (PORTADA) --- */
+ .hero {
+ padding: 5rem 2rem;
+ text-align: center;
+ background: linear-gradient(180deg, rgba(212,175,55,0.05) 0%, rgba(15,15,17,1) 100%);
+ border-bottom: 1px solid var(--border-color);
+ }
+
+ .hero h1 {
+ font-size: 2.8rem;
+ color: var(--accent-gold);
+ margin-bottom: 1rem;
+ }
+
+ .hero p {
+ font-size: 1.1rem;
+ color: var(--text-muted);
+ max-width: 600px;
+ margin: 0 auto 2rem;
+ }
+
+ .btn-gold {
+ display: inline-block;
+ background: transparent;
+ color: var(--accent-gold);
+ border: 1px solid var(--accent-gold);
+ padding: 0.8rem 2rem;
+ text-transform: uppercase;
+ font-size: 0.85rem;
+ font-weight: 600;
+ letter-spacing: 2px;
+ border-radius: 4px;
+ }
+
+ .btn-gold:hover {
+ background-color: var(--accent-gold);
+ color: #000;
+ box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+ }
+
+ /* --- CARACTERÍSTICAS / BENEFICIOS --- */
+ .benefits {
+ display: flex;
+ justify-content: center;
+ gap: 2rem;
+ flex-wrap: wrap;
+ padding: 2rem;
+ background-color: #141417;
+ border-bottom: 1px solid var(--border-color);
+ font-size: 0.9rem;
+ color: var(--text-muted);
+ }
+
+ .benefit-item {
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+
+ .benefit-item span {
+ color: var(--accent-gold);
+ font-weight: bold;
+ }
+
+ /* --- CATÁLOGO DE PRODUCTOS --- */
+ .container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 4rem 2rem;
+ }
+
+ .section-title {
+ text-align: center;
+ font-size: 2rem;
+ color: var(--accent-gold);
+ margin-bottom: 0.5rem;
+ }
+
+ .section-subtitle {
+ text-align: center;
+ color: var(--text-muted);
+ margin-bottom: 3rem;
+ font-size: 0.95rem;
+ }
+
+ .grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+ gap: 2rem;
+ }
+
+ .card {
+ background-color: var(--card-bg);
+ border: 1px solid var(--border-color);
+ border-radius: 8px;
+ padding: 1.5rem;
+ text-align: center;
+ transition: transform 0.3s ease, border-color 0.3s ease;
+ }
+
+ .card:hover {
+ transform: translateY(-5px);
+ border-color: var(--accent-gold);
+ }
+
+ .card h3 {
+ font-size: 1.2rem;
+ margin-bottom: 0.5rem;
+ color: var(--text-light);
+ }
+
+ .card .price {
+ font-size: 1.3rem;
+ color: var(--accent-gold);
+ font-weight: 600;
+ margin: 1rem 0;
+ }
+
+ .card .size {
+ font-size: 0.85rem;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+
+ /* --- FOOTER / CONTACTO --- */
+ footer {
+ background-color: #08080a;
+ border-top: 1px solid var(--border-color);
+ padding: 3rem 2rem;
+ text-align: center;
+ }
+
+ .contact-links {
+ display: flex;
+ justify-content: center;
+ gap: 1.5rem;
+ margin: 1.5rem 0;
+ }
+
+ .contact-links a {
+ color: var(--accent-gold);
+ font-weight: 500;
+ letter-spacing: 1px;
+ }
+
+ .contact-links a:hover {
+ text-decoration: underline;
+ }
+
+ .copyright {
+ color: var(--text-muted);
+ font-size: 0.8rem;
+ margin-top: 2rem;
+ }
+
+ /* --- ADAPTABILIDAD A TELÉFONOS --- */
+ @media (max-width: 768px) {
+ .header-container {
+ flex-direction: column;
+ gap: 1rem;
+ }
+
+ .hero h1 {
+ font-size: 2rem;
+ }
+
+ .benefits {
+ flex-direction: column;
+ align-items: center;
+ gap: 1rem;
+ }
+ }
+ </style>
+</head>
+<body>
+
+ <!-- ENCABEZADO -->
+ <header>
+ <div class="header-container">
+ <a href="#" class="logo">
+ L&E PARFUMS
+ <span>FRAGANCIAS ÁRABES</span>
+ </a>
+ <nav>
+ <ul>
+ <li><a href="#inicio">Inicio</a></li>
+ <li><a href="#catalogo">Catálogo</a></li>
+ <li><a href="#decants">Decants</a></li>
+ <li><a href="#contacto">Contacto</a></li>
+ </ul>
+ </nav>
+ </div>
+ </header>
+
+ <!-- PORTADA -->
+ <section id="inicio" class="hero">
+ <h1>Tu próxima fragancia favorita</h1>
+ <p>Perfumes árabes y decants seleccionados para vos. Calidad 100% original con envío a todo el país.</p>
+ <a href="#catalogo" class="btn-gold">Ver Catálogo</a>
+ </section>
+
+ <!-- BENEFICIOS -->
+ <div class="benefits">
+ <div class="benefit-item"><span>✓</span> Atención personalizada</div>
+ <div class="benefit-item"><span>✓</span> Decants de 5 ml y 10 ml</div>
+ <div class="benefit-item"><span>✓</span> Compra directa por WhatsApp</div>
+ </div>
+
+ <!-- SECCIÓN DE DECANTS -->
+ <section id="decants" class="container">
+ <h2 class="section-title">Nuestros Decants</h2>
+ <p class="section-subtitle">Probá tus fragancias favoritas en formato pequeño antes de comprar la botella entera.</p>
+ 
+ <div class="grid">
+ <div class="card">
+ <p class="size">Formato Muestra</p>
+ <h3>Decant 5 ML</h3>
+ <p class="price">$350 UYU</p>
+ <a href="#contacto" class="btn-gold">Consultar</a>
+ </div>
+ <div class="card">
+ <p class="size">Formato Estándar</p>
+ <h3>Decant 10 ML</h3>
+ <p class="price">$550 UYU</p>
+ <a href="#contacto" class="btn-gold">Consultar</a>
+ </div>
+ </div>
+ </section>
+
+ <!-- SECCIÓN CATÁLOGO -->
+ <section id="catalogo" class="container" style="border-top: 1px solid var(--border-color);">
+ <h2 class="section-title">Perfumes Destacados</h2>
+ <p class="section-subtitle">Explora nuestra colección de perfumes árabes originales.</p>
+
+ <div class="grid">
+ <div class="card">
+ <p class="size">Perfume Árabe</p>
+ <h3>Lattafa / Club de Nuit</h3>
+ <p class="price">Consultar Precio</p>
+ <a href="#contacto" class="btn-gold">Comprar</a>
+ </div>
+ <div class="card">
+ <p class="size">Perfume Árabe</p>
+ <h3>Fragancia Femenina</h3>
+ <p class="price">Consultar Precio</p>
+ <a href="#contacto" class="btn-gold">Comprar</a>
+ </div>
+ <div class="card">
+ <p class="size">Perfume Árabe</p>
+ <h3>Fragancia Masculina</h3>
+ <p class="price">Consultar Precio</p>
+ <a href="#contacto" class="btn-gold">Comprar</a>
+ </div>
+ </div>
+ </section>
+
+ <!-- PIE DE PÁGINA / CONTACTO -->
+ <footer id="contacto">
+ <h2 class="section-title">¿Cuál será tu próximo perfume?</h2>
+ <p style="color: var(--text-muted); margin-top: 0.5rem;">Contáctanos directamente para realizar tu pedido o consulta.</p>
+ 
+ <div class="contact-links">
+ <a href="https://wa.me/" target="_blank">WHATSAPP</a>
+ <a href="https://instagram.com/" target="_blank">INSTAGRAM</a>
+ </div>
+
+ <p class="copyright">L&E PARFUMS • Perfumes árabes & decants • © 2026</p>
+ </footer>
+
+</body>
+</html>
